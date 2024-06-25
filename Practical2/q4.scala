@@ -6,7 +6,9 @@ object Q4 {
     val costPerPerformance = 500
     val costPerAttendee = 3
 
-    val attendance = baseAttendance + ((15 - price) / 5) * attendanceIncrease
+    val attendance = baseAttendance + (if (price > 15) 
+      ((price - 15) / 5) * attendanceIncrease * -1 else 
+      ((15 - price) / 5) * attendanceIncrease)
     val revenue = price * attendance
     val cost = costPerPerformance + (attendance * costPerAttendee)
     val profit = revenue - cost
@@ -15,7 +17,7 @@ object Q4 {
   }
 
   def findBestTicketPrice(): Double = {
-    val ticketPrices = Array(5, 10, 15)
+    val ticketPrices = Array(5, 10, 15, 20, 25, 30, 35, 40, 45)
     val profits = ticketPrices.map(calculateProfit)
     val maxProfit = profits.max
     val bestTicketPrice = ticketPrices(profits.indexOf(maxProfit))
